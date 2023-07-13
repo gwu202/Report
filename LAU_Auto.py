@@ -1,13 +1,14 @@
 import scrapy
 import csv
 import datetime
+import os
 
 class GenericTableSpider(scrapy.Spider):
     name = 'generic_table'
     start_urls = ['https://www.bls.gov/lau/tables.htm']
     
     def parse(self, response):
-        #self.logger.debug(response.text)  # print the page source to check if it's correct
+        self.logger.debug(response.text)  # print the page source to check if it's correct
 
         # Extract all the links on the page
         links = response.xpath('//a/@href').getall()
@@ -44,10 +45,17 @@ class GenericTableSpider(scrapy.Spider):
 
         # Write the data to a CSV file
         
-        filename = 'file' + str(count+1) +'.csv'
-        with open(filename, 'w', newline='') as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=headers)
-            writer.writeheader()
-            for data in response.xpath('//table[@class="regular"]//tr[position()>1]'):
-                writer.writerow({headers[j]: cell.xpath('.//text()').get() for j, cell in enumerate(data.xpath('td'))})
-        self.logger.info('Saved data to {}'.format(filename))
+        date_time = datetime.datetime.now()
+        filename = str(date_time)+'.csv'
+        filename = os.path.join(os.getcwd(), 'Output.csv')
+        try:
+
+            with open(filename, 'w', newline='') as csvfile:
+                writer = csv.DictWriter(csvfile, fieldnames=headers)
+                writer.writeheader()
+                for data in response.xpath('//table[@class="regular"]//tr[position()>1]'):
+                    writer.writerow({headers[j]: cell.xpath('.//text()').get() for j, cell in enumerate(data.xpath('td'))})
+            self.logger.info('Saved data to {}'.format(filename))
+            pass
+        except OSError as e:
+            print(f"An error occurred while opening the file: {e}")
