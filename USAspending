@@ -1,0 +1,39 @@
+import scrapy
+import csv 
+
+
+class UsaspendingSpider(scrapy.Spider):
+    name = "usaspending"
+    allowed_domains = ["www.usaspending.gov"]
+    start_urls = ["https://www.usaspending.gov/download_center/custom_account_data"]
+
+    def parse(self, response):
+            table_rows = response.css('.table-class tr')
+
+            data = []
+            for row in table_rows:
+                row_data = []
+                columns = row.css('td')
+                for column in columns:
+                    cell_data = column.css('::text').get().strip()
+                    row_data.append(cell_data)
+                data.append(row_data)
+            def process_data(self, data):
+            # Example: Append ' (updated)' to the first row
+                updated_data = data
+                updated_data[0][0] += ' (updated)'
+            return updated_data
+
+            # Process the data as needed
+            updated_data = self.process_data(data)
+
+            # Save the updated data to a new CSV file
+            updated_filename = 'updated_custom_account_data.csv'
+            self.save_csv(updated_filename, updated_data)
+            self.log(f"Updated data saved to: {updated_filename}")
+
+            
+            def save_csv(self, filename, data):
+                with open(filename, 'w', newline='') as file:
+                    writer = csv.writer(file)
+                    writer.writerows(data)
