@@ -6,17 +6,23 @@ class LAUDataSpider(scrapy.Spider):
 
     def parse(self, response):
         self.logger.debug(response.text)  # print the page source to check if it's correct
-        # Extract the state names from the "td" elements in the first row of the table
-        for i, row in enumerate(response.xpath('//table[@class="regular"]//tr')):
-            # Skip the first row since it contains the state names
-            if i == 0:
-                continue
+        table_rows = response.xpath('//table[@id="lauhsthl"]/tbody/tr')
+
+        for row in table_rows:
+            state = row.xpath('.//th[1]//text()').get()
+            current_rate = row.xpath('.//td[1]//span/text()').get()
+            historical_high_date = row.xpath('.//td[2]//span/text()').get()
+            historical_high_rate = row.xpath('.//td[3]//span/text()').get()
+            historical_low_date = row.xpath('.//td[4]//span/text()').get()
+            historical_low_rate = row.xpath('.//td[5]//span/text()').get()
+
             yield {
-                'state': row.xpath('th[1]//text()').get(),
-                'February 2023 rate': row.xpath('td[1]//text()').get(),
-                'Historical High Date': row.xpath('td[2]//text()').get(),
-                'Historical High Rate': row.xpath('td[3]//text()').get(),
-                'Historical Low Date': row.xpath('td[4]//text()').get(),
-                'Historical Low Rate': row.xpath('td[5]//text()').get(),
+                'State': state,
+                'Current Rate': current_rate,
+                'Historical High Date': historical_high_date,
+                'Historical High Rate': historical_high_rate,
+                'Historical Low Date': historical_low_date,
+                'Historical Low Rate': historical_low_rate
             }
+
         self.logger.info('Finished scraping')  # log when the spider is finished
