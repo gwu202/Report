@@ -2,3 +2,4 @@ itemadapter==0.8.0
 redivis==0.11.1
 Scrapy==2.9.0
 selenium==4.11.2
+python-dotenv

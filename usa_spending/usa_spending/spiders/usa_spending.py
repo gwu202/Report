@@ -10,13 +10,12 @@ from selenium.webdriver.common.by import By
 import os
 
 # Get the current directory
+from .upload_redivis import create_dataset, create_table, filename_to_table_name, upload_file
+
 current_directory = os.getcwd()
 parent_directory = current_directory
 # Move two directories above
 # parent_directory = os.path.abspath(os.path.join(current_directory, "..", ".."))
-filename_to_table_name = {
-    "FY2023P01-P09_All_FA_AccountBreakdownByPA-OC_2023-08-21_H09M24S33_1.csv": "Federal Account Data Breakdown By Protection Agency"
-}
 
 
 def all_zip_files() -> set:
@@ -54,7 +53,7 @@ class USASpendingSpider(scrapy.Spider):
 
     def parse(self, response):
         # print(current_directory)
-        print(self.zip_before_running)
+        # print(self.zip_before_running)
         self.driver.get(response.url)
         driver = self.driver
         driver.find_element(By.XPATH,
@@ -78,6 +77,16 @@ class USASpendingSpider(scrapy.Spider):
         print(downloaded_file)
         downloaded_file = downloaded_file.pop()
         extract_zip_file(downloaded_file)
+        extracted_files = os.listdir("extracted_contents")
+        print(extracted_files)
+        # create_dataset_upload(downloaded_file, 'usaspending')
+        dataset = create_dataset('usa_spending_test')
+        for extracted_file in extracted_files:
+
+            table_name = filename_to_table_name(extracted_file)
+            table = create_table(dataset, table_name)
+            upload_file(table, "extracted_contents/" + extracted_file)
+            print(f'Finished Extracting {extracted_file}')
 
 
 if __name__ == '__main__':
