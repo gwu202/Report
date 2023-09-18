@@ -11,17 +11,20 @@ import os
 
 # Get the current directory
 from .upload_redivis import create_dataset, create_table, filename_to_table_name, upload_file
+# from upload_redivis import create_dataset
 
 current_directory = os.getcwd()
 parent_directory = current_directory
 # Move two directories above
 # parent_directory = os.path.abspath(os.path.join(current_directory, "..", ".."))
 
-
+def all_existing_files(extension='.zip') -> set:
+    all_files = [file for file in os.listdir(parent_directory) if file.endswith(extension)]
+    return set(all_files)
 def all_zip_files() -> set:
+
     # List all zip files in the parent directory
-    zip_files = [file for file in os.listdir(parent_directory) if file.endswith(".zip")]
-    return set(zip_files)
+    return  all_existing_files()
 
 
 def extract_zip_file(first_zip_file):
@@ -37,7 +40,7 @@ def extract_zip_file(first_zip_file):
 
 
 class USASpendingSpider(scrapy.Spider):
-    name = "usaspending"
+    name = "usa_spending"
     start_urls = ["https://www.usaspending.gov/download_center/custom_account_data"]
 
     def __init__(self, **kwargs):
@@ -73,6 +76,7 @@ class USASpendingSpider(scrapy.Spider):
             if len(downloaded_file) > 0:
                 break
             else:
+                print('Waiting for file to be downloaded')
                 time.sleep(30)
         print(downloaded_file)
         downloaded_file = downloaded_file.pop()
