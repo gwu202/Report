@@ -10,11 +10,17 @@ usa_spending/.DS_Store
 usa_spending/.env
 
 scrapy/usa_spending/spiders/__pycache__/
+scrapy/usa_spending/spiders/.env/
 
 scrapy/usa_spending/__pycache__/
 
 LAUS/.env
 
+
 LAUS/__pycache__/
 
 usa_spending/usa_spending/spiders/__pycache__/
+*/.env
+*/__pycache__/
+
+.env
