@@ -4,7 +4,7 @@ import scrapy
 import csv
 import datetime
 
-class GenericTableSpider():
+class GenericTableSpider(scrapy.Spider):
     name = 'generic_table'
     start_urls = ['https://www.bls.gov/lau/tables.htm']
 

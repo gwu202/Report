@@ -14,6 +14,7 @@ parent_directory = current_directory
 
 URL = "https://enviro.epa.gov/enviro/P2_EF_Query.master_build_sql?FacOrParent=1&Industry_Search=null&Industry_Search=311&Chemical_Search=null&Year_Search=null&State_Search=null&pZipCity=&database_type=TRI&results2_length=10&page_no=1&pRepOption=1"
 
+# List of Facilities in TRI submitting Pollution Prevention Information for Selected Criteria:#
 
 class EpaEnvironSpider(scrapy.Spider):
     name = "epa_environ"

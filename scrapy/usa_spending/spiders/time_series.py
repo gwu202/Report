@@ -12,7 +12,7 @@ current_directory = os.getcwd()
 
 URL = 'https://www.transit.dot.gov/ntd/data-product/ts11-total-funding-time-series-2'
 
-
+# Transit funding time series
 class TotalFundingSpider(scrapy.Spider):
     name = "total_funding"
     allowed_domains = ["transit.dot.gov"]

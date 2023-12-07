@@ -48,6 +48,7 @@ class USASpendingSpider(scrapy.Spider):
         self.zip_before_running = all_zip_files()
 
         options = webdriver.ChromeOptions()
+
         options.add_argument("download.default_directory=./files/")
         options.add_argument("--headless")
 

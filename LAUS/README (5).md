@@ -1,4 +1,4 @@
-# Web Scraping Project - U.S. Bureau of Labor Statistics
+sc# Web Scraping Project - U.S. Bureau of Labor Statistics
 
 This project utilizes Python Scrapy to scrape data from the U.S. Bureau of Labor Statistics (LAUS) website (https://www.bls.gov/lau/tables.htm). The goal is to automate the extraction of data from the websites without API or Download access. 
 

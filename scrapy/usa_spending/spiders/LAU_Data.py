@@ -1,15 +1,17 @@
 import csv
 
 import scrapy
+from .upload_redivis import create_dataset, create_table, upload_file
 
+# LAUS
 class LAUDataSpider(scrapy.Spider):
     name = 'LAU_data'
     start_urls = ['https://www.bls.gov/web/laus/lauhsthl.htm']
-
+    file_name = 'lau_data.csv'
     def parse(self, response):
         self.logger.debug(response.text)  # print the page source to check if it's correct
         table_rows = response.xpath('//table[@id="lauhsthl"]/tbody/tr')
-        with open('output.csv', 'w', newline='', encoding='utf-8') as csvfile:
+        with open(self.file_name, 'w', newline='', encoding='utf-8') as csvfile:
             # Create a CSV writer object
             csv_writer = csv.writer(csvfile)
 
@@ -29,14 +31,9 @@ class LAUDataSpider(scrapy.Spider):
                 csv_writer.writerow([state, current_rate, historical_high_date, historical_high_rate,
                                      historical_low_date, historical_low_rate])
 
-
-                yield {
-                    'State': state,
-                    'Current Rate': current_rate,
-                    'Historical High Date': historical_high_date,
-                    'Historical High Rate': historical_high_rate,
-                    'Historical Low Date': historical_low_date,
-                    'Historical Low Rate': historical_low_rate
-                }
+        dataset = create_dataset('lau_data_test')
+        table = create_table(dataset, "Local Area Unemployment Statistics")
+        upload_file(table, self.file_name)
+        print(f'Finished Extracting {self.file_name}')
 
         self.logger.info('Finished scraping')  # log when the spider is finished

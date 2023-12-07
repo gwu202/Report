@@ -1,14 +1,21 @@
-# Redivis: 
-Instructions on how to upload files from local computer to Redivis. 
+# How to use: 
+Instructions on how to run the scrapy spiders 
+## Install Requirements
+Python version used is 3.7.
 
-# LAUS:
-Local Areal Unemployment Statistics:
-1. Code
-2. ReadMe (Instructions)
-Source: 
+Run `pip install -r requirements.txt`
 
-# Federal Spending: 
-Source:
+## Run a spider
+`cd scrapy && scrapy crawl spider_name`
+## Redivis Token
+Insert a `.env` file under `scrapy/usa_spending/spiders` 
 
-# Misc: 
-Miscellenous material used/created during primary goal. 
+The `.env.` should be `TOKEN=FAKE_TOKEN`
+# Spider Names:
+- monthly_ridership (Transit ridership time series)
+- epa_environ (Pollution Prevention Information)
+- fatality (Work-related fatalities)
+- LAU_data (Current Unemployment Rates for States)
+- safety_security_major (Transit Safety & Security)
+- total_funding (Transit funding time series)
+- usa_spending (Federal Spending For EPA)

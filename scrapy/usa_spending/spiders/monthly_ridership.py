@@ -21,7 +21,7 @@ current_directory = os.getcwd()
 URL = 'https://www.transit.dot.gov/ntd/data-product/monthly-module-adjusted-data-release'
 
 
-
+# Transit ridership time series
 class EpaEnvironSpider(scrapy.Spider):
     name = "monthly_ridership"
     allowed_domains = ["enviro.epa.gov"]

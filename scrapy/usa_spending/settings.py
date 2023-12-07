@@ -11,14 +11,13 @@ BOT_NAME = "usa_spending"
 
 SPIDER_MODULES = ["usa_spending.spiders"]
 NEWSPIDER_MODULE = "usa_spending.spiders"
-
-
+ITEM_PIPELINES = {'scrapy.pipelines.files.FilesPipeline': 1, }
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "usa_spending (+http://www.yourdomain.com)"
-
+# FILES_STORE = "/Users/khaledghamgui/Desktop/baltimoreProject/Report/scrapy/usa_spending/spiders/files/ejscreen"
+FILES_STORE = "ejscreen"
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
-
+# ROBOTSTXT_OBEY = True
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 

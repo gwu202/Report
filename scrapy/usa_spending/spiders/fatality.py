@@ -20,6 +20,8 @@ header = ["Date", "City", "State", "Hazard Description", "Inspection Number", "F
 with open('fatality.csv', 'w', newline='') as csvfile:
     csv_writer = csv.writer(csvfile)
     csv_writer.writerow(header)
+
+# OSHA fatality data
 class GenericTableSpider(scrapy.Spider):
     name = 'fatality'
     start_urls = ['https://www.osha.gov/fatalities#&sort%5B%23incSum%5D=0-1-1-0&sort%5B%23incSum%5D=0-1-1-0']
